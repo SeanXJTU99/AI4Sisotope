@@ -103,8 +103,8 @@ def select_candidates(
 
     Args:
         model_devi: Model deviation data from parse_model_deviation.
-        trust_lo: Lower trust bound (eV/Å). Below this, model is accurate.
-        trust_hi: Upper trust bound (eV/Å). Above this, extrapolation danger.
+        trust_lo: Lower trust bound (eV/Ang). Below this, model is accurate.
+        trust_hi: Upper trust bound (eV/Ang). Above this, extrapolation danger.
         max_candidates: Maximum number of candidates to return.
 
     Returns:

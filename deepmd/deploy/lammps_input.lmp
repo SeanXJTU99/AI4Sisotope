@@ -1,0 +1,48 @@
+# LAMMPS input script for deploying the frozen DPA-2 force field.
+# Performs NVT molecular dynamics with the DeepMD pair style.
+#
+# This template is used for both production MD and DP-GEN exploration runs.
+# Replace frozen_model.pb with the path to your trained model.
+
+units           metal
+atom_style      atomic
+boundary        p p p
+
+# Read initial configuration
+read_data       system.data
+
+# ---- Force Field ----
+pair_style      deepmd frozen_model.pb
+pair_coeff      * *
+
+# ---- Initial Velocities ----
+# Seed=42 ensures reproducibility; mom=yes zeros linear momentum
+velocity        all create 145.0 42 mom yes rot yes dist gaussian
+
+# ---- Thermostat (Nose-Hoover NVT) ----
+# Tdamp = 100 * timestep for weak coupling
+fix             1 all nvt temp 145.0 145.0 $(100.0*dt)
+
+# ---- Timestep ----
+# 0.5 fs for light-element systems with PIMD-compatible time resolution
+timestep        0.0005
+
+# ---- Equilibration ----
+thermo          1000
+thermo_style    custom step temp ke pe etotal press vol
+run             100000
+
+# ---- Production Run ----
+reset_timestep  0
+unfix           1
+
+# Re-apply thermostat for production statistics
+fix             2 all nvt temp 145.0 145.0 $(100.0*dt)
+fix             fprint all print 1000 "$(step) $(temp) $(etotal) $(press)" &
+                screen no file md_production.dat
+
+run             500000
+
+# ---- Output ----
+write_data      final_system.data
+print           "Production MD completed. Output: final_system.data, md_production.dat"

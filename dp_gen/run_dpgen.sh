@@ -6,9 +6,9 @@
 #   bash run_dpgen.sh [slurm|pbs|local]
 #
 # Stages:
-#   1. init_bulk  — prepare initial training data
-#   2. run         — active learning loop (exploration → labeling → training)
-#   3. auto_test   — final validation
+#   1. init_bulk  -- prepare initial training data
+#   2. run         -- active learning loop (exploration -> labeling -> training)
+#   3. auto_test   -- final validation
 
 set -euo pipefail
 

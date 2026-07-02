@@ -15,9 +15,9 @@ import numpy as np
 
 
 # --- Physical constants preserved as-is (real production values) ---
-SCF_THR = 1e-7          # eV — tight SCF convergence for force accuracy
+SCF_THR = 1e-7          # eV -- tight SCF convergence for force accuracy
 SCF_NMAX = 200           # maximum SCF iterations
-FORCE_THR_EV_ANG = 0.01  # eV/Å — force convergence criterion
+FORCE_THR_EV_ANG = 0.01  # eV/Ang -- force convergence criterion
 
 
 def prepare_abacus_inputs(
@@ -36,7 +36,7 @@ def prepare_abacus_inputs(
         candidate_indices: Frame indices selected for DFT labeling.
         template_dir: Path to ABACUS template directory.
         output_dir: Root directory for labeling tasks.
-        box_size: Cubic box side length in Ångström.
+        box_size: Cubic box side length in Angstrom.
 
     Returns:
         List of task directory paths ready for ABACUS execution.
@@ -184,7 +184,7 @@ def _fill_stru_template(template: str, box_size: float, seed: int) -> str:
 
     Args:
         template: STRU template content.
-        box_size: Cubic box side length in Ångström.
+        box_size: Cubic box side length in Angstrom.
         seed: Random seed for reproducible perturbation.
 
     Returns:

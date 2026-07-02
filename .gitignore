@@ -1,0 +1,52 @@
+# Model weights and checkpoints
+*.pth
+*.bin
+*.pt
+*.pb
+checkpoints/
+lora_adapters/
+frozen_models/
+
+# Data files (proprietary)
+*.xlsx
+*.csv
+raw_data/
+secrets.yaml
+*.npy
+*.h5
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment
+.env
+.env.local
+
+# Outputs
+outputs/
+logs/
+wandb/
+lcurve.out
+
+# Docker
+.docker/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project management (not part of codebase)
+CLAUDE.md
+传统DFT计算物理进行了AI化改进.md

@@ -1,0 +1,75 @@
+{
+    "type_map": ["B", "F"],
+    "mass_map": [10.811, 18.998],
+
+    "model_devi": {
+        "trust_lo": 0.05,
+        "trust_hi": 0.15,
+        "numb_models": 4,
+        "numb_candi": 50,
+        "numb_candi_random": 200,
+        "dt": 0.5,
+        "nsteps": 5000,
+        "temperature": 145.0,
+        "tau": 0.1
+    },
+
+    "train": {
+        "numb_models": 4,
+        "default_training_param": {
+            "model": {
+                "descriptor": {
+                    "type": "se_e2_a",
+                    "sel": [60, 80],
+                    "rcut_smth": 0.5,
+                    "rcut": 6.0,
+                    "neuron": [25, 50, 100],
+                    "axis_neuron": 16
+                },
+                "fitting_net": {
+                    "neuron": [240, 240, 240],
+                    "resnet_dt": true
+                }
+            },
+            "learning_rate": {
+                "type": "exp",
+                "start_lr": 0.001,
+                "decay_steps": 5000
+            },
+            "loss": {
+                "start_pref_e": 0.02,
+                "limit_pref_e": 1.0,
+                "start_pref_f": 1000,
+                "limit_pref_f": 1.0,
+                "start_pref_v": 0.0,
+                "limit_pref_v": 0.0
+            },
+            "training": {
+                "numb_steps": 1000000,
+                "seed": 42,
+                "disp_file": "lcurve.out",
+                "disp_freq": 1000,
+                "save_freq": 5000
+            }
+        }
+    },
+
+    "dpgen_data": {
+        "init_data_sys": [
+            "../data/init/bf3_dimer"
+        ],
+        "sys_batch_num": {
+            "explore": 8,
+            "train": 4
+        },
+        "explore_sys_dir": "exploration/result",
+        "labeled_sys_dir": "labeling/result"
+    },
+
+    "scf_config": {
+        "scf_thr": 1e-7,
+        "scf_nmax": 200,
+        "force_thr_ev_per_ang": 0.01,
+        "stress_thr_kbar": 1.0
+    }
+}

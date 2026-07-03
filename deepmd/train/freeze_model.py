@@ -12,6 +12,7 @@ from typing import Optional
 def freeze_model(
     checkpoint_dir: Path = Path("."),
     output_path: Path = Path("frozen_model.pb"),
+
 ) -> Path:
     """Freeze a trained model checkpoint to a deployable .pb file.
 
@@ -44,6 +45,7 @@ def freeze_model(
     #     ["dp", "freeze", "-c", str(latest), "-o", str(output_path)],
     #     check=True,
     # )
+
     print("Model frozen successfully (mock -- production uses dp freeze CLI).")
     return output_path
 

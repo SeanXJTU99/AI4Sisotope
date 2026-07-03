@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  PILE (Path Integral Langevin Equation) thermostat configuration.
+  Applies mode-specific Langevin damping optimized for PIMD normal modes.
+
+  Key property: each normal mode k (k=0 = centroid, k=1..P-1 = internal)
+  gets its own friction coefficient, solving the non-ergodicity problem
+  of standard global thermostats in path integral simulations.
+
+  Reference: Ceriotti et al., J. Chem. Phys. 133, 124104 (2010)
+-->
+<thermostat mode="pile_l">
+  <tau units="femtosecond">100.0</tau>
+  <pile_lambda>0.5</pile_lambda>
+
+  <!--
+    Mode-specific damping coefficients.
+    Centroid (k=0): standard Langevin with tau=100 fs
+    Internal modes (k>0): optimal damping at lambda=0.5
+    (critical damping for the highest-frequency normal mode)
+
+    For BF3 at 145 K with P=64:
+    - Centroid samples the classical phase space
+    - Higher-k modes capture quantum fluctuations
+    - lambda=0.5 ensures efficient sampling of spring potential
+  -->
+</thermostat>

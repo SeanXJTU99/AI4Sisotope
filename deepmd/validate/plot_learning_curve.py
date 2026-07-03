@@ -95,8 +95,8 @@ def plot_force_rmse(
 
     Args:
         steps: Training step numbers.
-        rmse_tr: Training force RMSE (eV/Å).
-        rmse_va: Validation force RMSE (eV/Å).
+        rmse_tr: Training force RMSE (eV/Ang).
+        rmse_va: Validation force RMSE (eV/Ang).
         ax: Optional matplotlib Axes to plot on.
 
     Returns:
@@ -108,7 +108,7 @@ def plot_force_rmse(
     ax.plot(steps, rmse_tr, alpha=0.6, linewidth=0.8, label="Training", color="#1f77b4")
     ax.plot(steps, rmse_va, alpha=0.9, linewidth=1.2, label="Validation", color="#d62728")
     ax.set_xlabel("Training Step")
-    ax.set_ylabel("Force RMSE (eV/Å)")
+    ax.set_ylabel("Force RMSE (eV/Ang)")
     ax.set_title("Force Learning Curve")
     ax.legend()
     ax.grid(alpha=0.3)
@@ -155,7 +155,7 @@ def plot_combined(
         color="#d62728",
     )
     ax2.annotate(
-        f"Final: {lcurve_data['rmse_f_va'][-1]:.4f} eV/Å",
+        f"Final: {lcurve_data['rmse_f_va'][-1]:.4f} eV/Ang",
         xy=(lcurve_data["step"][-1], lcurve_data["rmse_f_va"][-1]),
         xytext=(0.6, 0.9),
         textcoords="axes fraction",

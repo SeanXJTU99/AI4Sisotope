@@ -85,12 +85,19 @@ def apply_lora(
         lora_config: LoRA configuration dict from build_lora_config.
         training_data: Path to target system training data.
         output_dir: Directory for fine-tuned checkpoints.
-        n_steps: Number of fine-tuning steps (default: 200k).
+
+        n_steps: Number of fine-tuning steps. Overrides any existing
+            numb_steps in lora_config["training"].
 
     Returns:
         Path to the best fine-tuned checkpoint.
     """
     output_dir.mkdir(parents=True, exist_ok=True)
+
+    # Apply the caller's step count (takes precedence over config default)
+    if "training" not in lora_config:
+        lora_config["training"] = {}
+    lora_config["training"]["numb_steps"] = n_steps
 
     # Write the modified config
     config_path = output_dir / "input_lora.json"

@@ -36,7 +36,7 @@ Ewald summation. This is essential for:
 
 | Parameter | Value | Rationale |
 |-----------|-------|-----------|
-| `rcut_lr` | 12.0 Å | Beyond 12 Å, interactions are ~10⁻³ eV for BF3/CF4 |
+| `rcut_lr` | 12.0 A | Beyond 12 A, interactions are ~1e-3 eV for BF3/CF4 |
 | `ewald_beta` | 0.4 | Standard splitting parameter |
 | `ewald_h` | 1.0 | Grid spacing for reciprocal sum |
 | `q_atom` | [0.0, 0.0] | Net-neutral molecules, no explicit charges needed |
@@ -81,7 +81,7 @@ than F forces in BF3 due to the Born-Oppenheimer surface topology.
 
 ## Typical Training Results
 
-| System | Energy RMSE (meV/atom) | Force RMSE (meV/Å) | Steps |
+| System | Energy RMSE (meV/atom) | Force RMSE (meV/Ang) | Steps |
 |--------|----------------------|--------------------|-------|
 | BF3 (this project) | ~1.2 | ~25 | 1,000,000 |
 | CF4 (transfer) | ~1.5 | ~30 | 200,000 (LoRA) |

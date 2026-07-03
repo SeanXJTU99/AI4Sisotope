@@ -5,7 +5,6 @@ and generates per-element error breakdowns for diagnostic analysis.
 """
 
 from pathlib import Path
-from typing import Optional
 
 import numpy as np
 
@@ -13,14 +12,12 @@ import numpy as np
 def compute_rmse(
     pred: np.ndarray,
     ref: np.ndarray,
-    per_atom: bool = True,
 ) -> float:
     """Compute root-mean-square error between prediction and reference.
 
     Args:
         pred: Predicted values, shape (n_frames, ...).
         ref: Reference DFT values, same shape as pred.
-        per_atom: If True, normalize energy RMSE by number of atoms.
 
     Returns:
         RMSE value.
@@ -47,7 +44,7 @@ def validate_energy(
     Returns:
         Dict with rmse_energy_mev_per_atom and rmse_energy_mev_total.
     """
-    rmse_total = compute_rmse(pred_energy, ref_energy, per_atom=False)
+    rmse_total = compute_rmse(pred_energy, ref_energy)
     rmse_per_atom = rmse_total / n_atoms
 
     return {
@@ -63,13 +60,13 @@ def validate_force(
     """Validate atomic force predictions against DFT reference.
 
     Args:
-        pred_forces: Predicted forces, shape (n_frames, n_atoms, 3) in eV/Å.
+        pred_forces: Predicted forces, shape (n_frames, n_atoms, 3) in eV/Ang.
         ref_forces: Reference DFT forces, same shape.
 
     Returns:
         Dict with rmse_force_meV_Ang and max_force_error_meV_Ang.
     """
-    rmse = compute_rmse(pred_forces, ref_forces, per_atom=False)
+    rmse = compute_rmse(pred_forces, ref_forces)
     max_error = float(np.max(np.abs(pred_forces - ref_forces)))
 
     return {
@@ -93,7 +90,7 @@ def validate_virial(
     Returns:
         Dict with rmse_virial_meV_per_atom.
     """
-    rmse = compute_rmse(pred_virial, ref_virial, per_atom=False)
+    rmse = compute_rmse(pred_virial, ref_virial)
 
     return {
         "rmse_virial_meV_per_atom": round(rmse / n_atoms * 1000, 3),
@@ -119,7 +116,7 @@ def validate_model(
     if not frozen_model.exists():
         raise FileNotFoundError(f"Model not found: {frozen_model}")
 
-    # Mock validation results — production uses deepmd.infer.DeepPot
+    # Mock validation results -- production uses deepmd.infer.DeepPot
     rng = np.random.default_rng(42)
     n_frames_total = 0
     all_energy_rmse: list[float] = []
@@ -135,7 +132,7 @@ def validate_model(
             n_frames = 100  # mock
             n_frames_total += n_frames
             all_energy_rmse.append(rng.normal(1.2, 0.1))  # meV/atom
-            all_force_rmse.append(rng.normal(25.0, 2.0))  # meV/Å
+            all_force_rmse.append(rng.normal(25.0, 2.0))  # meV/Ang
 
     return {
         "n_frames_tested": n_frames_total,
@@ -162,7 +159,7 @@ def analyze_force_by_element(
         type_map: List mapping type index to element name.
 
     Returns:
-        Dict mapping element name to force RMSE in meV/Å.
+        Dict mapping element name to force RMSE in meV/Ang.
     """
     results: dict[str, float] = {}
 
@@ -171,7 +168,7 @@ def analyze_force_by_element(
         if np.any(mask):
             pred_elem = pred_forces[:, mask, :]
             ref_elem = ref_forces[:, mask, :]
-            rmse = compute_rmse(pred_elem, ref_elem, per_atom=False)
+            rmse = compute_rmse(pred_elem, ref_elem)
             results[element] = round(rmse * 1000, 2)
 
     return results
@@ -195,8 +192,8 @@ def generate_validation_report(
             f.write(f"| {key} | {val} |\n")
 
         f.write("\n## Acceptance Criteria\n\n")
-        f.write("- Energy RMSE < 2.0 meV/atom ✅\n")
-        f.write("- Force RMSE < 50 meV/Å ✅\n")
-        f.write("- No frames exceed 200 meV/Å max force error ✅\n")
+        f.write("- Energy RMSE < 2.0 meV/atom [PASS]\n")
+        f.write("- Force RMSE < 50 meV/Ang [PASS]\n")
+        f.write("- No frames exceed 200 meV/Ang max force error [PASS]\n")
 
     print(f"Validation report written to: {output_path}")

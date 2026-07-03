@@ -26,9 +26,9 @@ def parse_abacus_output(output_dir: Path) -> dict[str, np.ndarray]:
     Returns:
         Dict with keys:
             - energy: total energy in eV (scalar float)
-            - forces: atomic forces in eV/Å, shape (n_atoms, 3)
+            - forces: atomic forces in eV/Ang, shape (n_atoms, 3)
             - virial: virial tensor in eV, shape (3, 3)
-            - coords: atomic positions in Å, shape (n_atoms, 3)
+            - coords: atomic positions in Ang, shape (n_atoms, 3)
             - atom_types: integer type indices, shape (n_atoms,)
             - n_atoms: number of atoms
 

@@ -1,5 +1,5 @@
 {
-    "_comment": "DPA-2 + DP-LONG training configuration for BF3/CF4 isotope effect force field. All hyperparameters preserved as-is — these are production tuning values.",
+    "_comment": "DPA-2 + DP-LONG training configuration for BF3/CF4 isotope effect force field. All hyperparameters preserved as-is (production tuning values).",
 
     "model": {
         "type_map": ["B", "F"],

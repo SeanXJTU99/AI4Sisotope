@@ -12,7 +12,7 @@ from typing import Optional
 def freeze_model(
     checkpoint_dir: Path = Path("."),
     output_path: Path = Path("frozen_model.pb"),
-    nodes_json: str = "input_dpa2.json",
+
 ) -> Path:
     """Freeze a trained model checkpoint to a deployable .pb file.
 
@@ -23,7 +23,6 @@ def freeze_model(
     Args:
         checkpoint_dir: Directory containing model.ckpt-*.pt files.
         output_path: Path for the frozen .pb model.
-        nodes_json: Original training input JSON (provides model architecture).
 
     Returns:
         Path to the frozen model file.
@@ -46,7 +45,8 @@ def freeze_model(
     #     ["dp", "freeze", "-c", str(latest), "-o", str(output_path)],
     #     check=True,
     # )
-    print("Model frozen successfully (mock — production uses dp freeze CLI).")
+
+    print("Model frozen successfully (mock -- production uses dp freeze CLI).")
     return output_path
 
 
@@ -66,13 +66,13 @@ def test_frozen_model(
     Returns:
         Dict with validation metrics:
             - energy_range_eV: min/max energy range in eV
-            - force_rms_eV_Ang: RMS force magnitude in eV/Å
+            - force_rms_eV_Ang: RMS force magnitude in eV/Ang
             - inference_time_ms: average inference time per frame
     """
     if not frozen_model.exists():
         raise FileNotFoundError(f"Frozen model not found: {frozen_model}")
 
-    # Mock validation output — production uses deepmd.infer.DeepPot
+    # Mock validation output -- production uses deepmd.infer.DeepPot
     return {
         "energy_range_eV": -18.2,
         "force_rms_eV_Ang": 0.015,

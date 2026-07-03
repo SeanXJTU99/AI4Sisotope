@@ -53,7 +53,7 @@ def check_convergence(
     Args:
         log_path: Path to running_scf.log.
         energy_threshold: SCF energy convergence criterion (eV).
-        force_threshold: Maximum allowed force RMS (eV/Å).
+        force_threshold: Maximum allowed force RMS (eV/Ang).
 
     Returns:
         Tuple of (converged: bool, message: str).

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<simulation mode="md" verbosity="medium">
+  <output prefix="pimd_output">
+    <checkpoint stride="1000" filename="restart" overwrite="true"/>
+    <properties stride="10" filename="properties">
+      [step, time{picosecond}, conserved{electronvolt},
+       temperature{kelvin}, potential{electronvolt},
+       kinetic_md{electronvolt}, pressure{bar}]
+    </properties>
+    <trajectory stride="50" filename="pos" format="xyz" bead="0">
+      positions{angstrom}
+    </trajectory>
+    <trajectory stride="50" filename="pos_all_beads" format="xyz" bead="all">
+      positions{angstrom}
+    </trajectory>
+  </output>
+
+  <total_steps>500000</total_steps>
+  <timestep units="femtosecond">0.25</timestep>
+  <temperature units="kelvin">145.0</temperature>
+
+  <system>
+    <initialize nbeads="64">
+      <file mode="xyz">init_conf.xyz</file>
+      <velocities mode="thermal" units="kelvin">145.0</velocities>
+    </initialize>
+
+    <forcesocket mode="unix" address="dp_socket">
+      <port>31415</port>
+    </forcesocket>
+
+    <ensemble mode="nvt">
+      <temperature units="kelvin">145.0</temperature>
+      <timestep units="femtosecond">0.25</timestep>
+    </ensemble>
+
+    <motion mode="dynamics">
+      <dynamics mode="nvt">
+        <timestep units="femtosecond">0.25</timestep>
+        <thermostat mode="pile_g">
+          <tau units="femtosecond">100.0</tau>
+          <pile_lambda>0.5</pile_lambda>
+        </thermostat>
+      </dynamics>
+    </motion>
+  </system>
+
+  <!--
+    Beads convergence guide for BF3 at 145 K:
+      P=32  -- adequate for heavy-element modes (nu4 ~630 cm-1)
+      P=64  -- recommended minimum (converges nu2 out-of-plane bend ~691 cm-1)
+      P=128 -- fully converged for all modes including nu3 stretch ~1280 cm-1
+
+    To run with P=128, change nbeads="64" to nbeads="128" above and
+    adjust total_steps proportionally for comparable sampling.
+  -->
+</simulation>

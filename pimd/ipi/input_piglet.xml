@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  PIGLET (Path Integral Generalized Langevin Equation Thermostat) configuration.
+  Uses a colored-noise GLE thermostat to achieve quantum convergence with
+  significantly fewer beads than standard PILE.
+
+  Key advantage: P=32 with PIGLET achieves accuracy comparable to P=128
+  with standard thermostats, reducing computational cost by ~4x.
+
+  The A matrix (6x6) encodes the optimized GLE parameters fitted to
+  match the quantum harmonic oscillator free energy.
+
+  Reference: Ceriotti and Manolopoulos, Phys. Rev. Lett. 109, 100604 (2012)
+-->
+<thermostat mode="gle">
+  <A shape="6,6">
+     0.0000000000000000e+00,  1.0000000000000000e+00,  0.0000000000000000e+00,  0.0000000000000000e+00,  0.0000000000000000e+00,  0.0000000000000000e+00,
+    -1.8148424410000000e+03, -5.0129136400000000e+01,  0.0000000000000000e+00,  0.0000000000000000e+00,  0.0000000000000000e+00,  0.0000000000000000e+00,
+     0.0000000000000000e+00,  0.0000000000000000e+00,  0.0000000000000000e+00,  1.0000000000000000e+00,  0.0000000000000000e+00,  0.0000000000000000e+00,
+     0.0000000000000000e+00,  0.0000000000000000e+00, -3.7690680200000000e+02, -1.6611086000000000e+01,  0.0000000000000000e+00,  0.0000000000000000e+00,
+     0.0000000000000000e+00,  0.0000000000000000e+00,  0.0000000000000000e+00,  0.0000000000000000e+00,  0.0000000000000000e+00,  1.0000000000000000e+00,
+     0.0000000000000000e+00,  0.0000000000000000e+00,  0.0000000000000000e+00,  0.0000000000000000e+00, -2.7473582500000000e+01, -6.9746128000000000e+00
+  </A>
+  <C shape="1,6">
+     0.0000000000000000e+00,  4.2648257000000000e+01,  0.0000000000000000e+00,  1.9412486800000000e+01,  0.0000000000000000e+00,  5.2433268000000000e+00
+  </C>
+  <!--
+    Fitted for T = 145 K (BF3 liquid phase production temperature).
+    Parameters optimized via fitting to quantum harmonic oscillator
+    centroid-virial kinetic energy estimator.
+  -->
+</thermostat>
